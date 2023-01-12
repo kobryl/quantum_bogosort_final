@@ -1,3 +1,10 @@
 {% include 'final/includes/header.html' %}
-
+{% if not route %}
+    <div class="route-not-found">
+        <h1>Nie znaleziono trasy</h1>
+        <p>Przepraszamy, nie znaleźliśmy trasy pomiędzy {{ start_name }} a {{ end_name }} spełniającej podane kryteria
+            (maksymalna liczba przesiadek: {{ max_changes }}, maksymalny czas oczekiwania na przesiadkę: {{ max_waiting_time }}
+            maksymalny dystans do pokonania pieszo: {{ max_distance_on_foot }}).</p>
+    </div>
+{% endif %}
 {% include 'final/includes/footer.html' %}

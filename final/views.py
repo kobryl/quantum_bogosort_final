@@ -1,7 +1,7 @@
 import json
 from urllib.request import urlopen
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 from .models import Stop
@@ -28,10 +28,19 @@ def index(request):
     return render(request, 'final/index.html', context)
 
 
-def tf(request, tf_id):
-    tf = get_object_or_404(Tf, pk=tf_id)
-    return render(request, 'final/tf.html', {'tf': tf})
-
-
 def trasa(request):
-    return render(request, 'final/trasa.html')
+    if request.method == 'GET':
+        return redirect('final:index')
+    print(request.POST)
+    start_id = request.POST['start']
+    start_name = Stop.objects.get(stopId=start_id).stopName + ' ' + Stop.objects.get(stopId=start_id).subName
+    end_id = request.POST['end']
+    end_name = Stop.objects.get(stopId=end_id).stopName + ' ' + Stop.objects.get(stopId=end_id).subName
+    max_changes = request.POST['max_changes']
+    max_waiting_time = request.POST['max_waiting_time']
+    max_distance_on_foot = request.POST['max_distance_on_foot']
+    # tu bedzie komunikacja z algorytmem
+    context = {'start_id': start_id, 'end_id': end_id, 'max_changes': max_changes,
+               'max_waiting_time': max_waiting_time, 'max_distance_on_foot': max_distance_on_foot,
+               'start_name': start_name, 'end_name': end_name, 'route': []}
+    return render(request, 'final/trasa.html', context)

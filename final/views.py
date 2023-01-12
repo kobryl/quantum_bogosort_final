@@ -20,9 +20,10 @@ def index(request):
         ids = []
         MainForm.lastUpdate = data_json['lastUpdate']
     for stop in data_json['stops']:
-        if MainForm.lastUpdate or stop['stopId'] not in ids:
-            MainForm.objects.create(stopId=stop['stopId'], stopName=stop['stopName'], subName=stop['subName'],
-                                    stopLat=stop['stopLat'], stopLon=stop['stopLon'], nonpassenger=stop['nonpassenger'])
+        if stop['nonpassenger'] is False:
+            if MainForm.lastUpdate or stop['stopId'] not in ids:
+                MainForm.objects.create(stopId=stop['stopId'], stopName=stop['stopName'], subName=stop['subName'],
+                                        stopLat=stop['stopLat'], stopLon=stop['stopLon'], nonpassenger=stop['nonpassenger'])
     context = {'stops': MainForm.objects.all()}
     return render(request, 'final/index.html', context)
 

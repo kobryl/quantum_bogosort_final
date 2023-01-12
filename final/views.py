@@ -26,7 +26,7 @@ def index(request):
                 Stop.objects.create(stopId=stop['stopId'], stopName=stop['stopName'], subName=stop['subName'],
                                     stopLat=stop['stopLat'], stopLon=stop['stopLon'], nonpassenger=stop['nonpassenger'])
     stops_dict = serializers.serialize('python', Stop.objects.all())
-    context = {'stops': Stop.objects.all(), 'stops_dict': stops_dict}
+    context = {'stops': Stop.objects.all().order_by('stopName', 'subName'), 'stops_dict': stops_dict}
     return render(request, 'final/index.html', context)
 
 

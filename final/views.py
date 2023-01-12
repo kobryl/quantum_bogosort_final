@@ -2,6 +2,8 @@ from . import services
 from django.shortcuts import render, redirect
 from django.core import serializers
 from .models import Stop
+from .services import get_possible_routes
+
 
 
 def index(request):
@@ -21,6 +23,7 @@ def index(request):
     print(Stop.objects.all())
     stops_dict = serializers.serialize('python', Stop.objects.all())
     context = {'stops': Stop.objects.all().order_by('stopName', 'subName'), 'stops_dict': stops_dict}
+    get_possible_routes(101, 102)
     return render(request, 'final/index.html', context)
 
 

@@ -13,6 +13,7 @@ class Tf(models.Model):
 
 
 class MainForm(models.Model):
+    lastUpdate = None
     stopId = models.IntegerField(primary_key=True)
     stopName = models.CharField(max_length=200)
     subName = models.CharField(max_length=200)

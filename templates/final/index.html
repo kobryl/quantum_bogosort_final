@@ -8,14 +8,14 @@
             <select name="start">
                 <option value="0">Wybierz punkt początkowy</option>
                 {% for stop in stops %}
-                    <option value="{{stop.stopId}}">{{stop.stopName}}</option>
+                    <option value="{{stop.stopId}}">{{stop.stopName}} {{ stop.subName }}</option>
                 {% endfor %}
             </select>
             <label for="end">Punkt końcowy</label>
             <select name="end">
                 <option value="0">Wybierz punkt końcowy</option>
                 {% for stop in stops %}
-                    <option value="{{stop.stopId}}">{{stop.stopName}}</option>
+                    <option value="{{stop.stopId}}">{{stop.stopName}} {{ stop.subName }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -30,7 +30,7 @@
             <input type="number" name="max_distance_on_foot" value="0" min="0" max="10000">
         </div>
         <div class="form-group-additional">
-            <lable for="search">Szukaj</lable>
+            <label for="search">Szukaj</label>
             <input type="submit" value="Szukaj">
         </div>
     </fieldset>

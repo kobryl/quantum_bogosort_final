@@ -1,4 +1,6 @@
 import json
+import requests
+from . import secret
 from urllib.request import urlopen
 
 from django.shortcuts import render, get_object_or_404
@@ -25,6 +27,7 @@ def index(request):
                 Stop.objects.create(stopId=stop['stopId'], stopName=stop['stopName'], subName=stop['subName'],
                                     stopLat=stop['stopLat'], stopLon=stop['stopLon'], nonpassenger=stop['nonpassenger'])
     context = {'stops': Stop.objects.all()}
+    print(calculate_estimated_travel_time((54.354656, 18.652203), (54.365726, 18.621069)))
     return render(request, 'final/index.html', context)
 
 
@@ -35,3 +38,15 @@ def tf(request, tf_id):
 
 def trasa(request):
     return render(request, 'final/trasa.html')
+
+
+def calculate_estimated_travel_time(positionA, positionB):
+    url = "https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?origins="
+    url += str(positionA[0]) + "," + str(positionA[1]) + "&destinations="
+    url += str(positionB[0]) + "," + str(positionB[1]) + "&travelMode=walking&key="
+    url += secret.SECRET_KEY
+
+    response = requests.get(url)
+    data = response.json()
+    time = float(data["resourceSets"][0]["resources"][0]["results"][0]["travelDuration"])/1.5
+    return time

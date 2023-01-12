@@ -49,8 +49,8 @@ def get_possible_routes(stop1, stop2):
     print(stop2routes)
     for i in stop1routes:
         for j in stop2routes:
-            if i['routeId'] == j['routeId'] and i['stopSequence'] < j['stopSequence']:
-                routes.append(i['tripId'])
+            if i['routeId'] not in routes and i['routeId'] == j['routeId'] and i['stopSequence'] < j['stopSequence']:
+                routes.append(i['routeId'])
                 stop2routes.remove(j)
     print(routes)
     return routes

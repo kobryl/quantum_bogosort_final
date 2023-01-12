@@ -1,11 +1,8 @@
 {% include "final/includes/header.html" %}
-{% if tfs %}
-    <ul>
-    {% for tf in tfs %}
-        <li><a href="/tf/{{ tf.id }}/">{{ tf.tf }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No tfs are available.</p>
-{% endif %}
+<forrm action="{% url 'final:trasa' %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend><h1></h1></legend>
+    </fieldset>
+</forrm>
 {% include "final/includes/footer.html" %}

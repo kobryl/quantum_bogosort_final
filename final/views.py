@@ -1,21 +1,16 @@
 import json
-import requests
 from . import services
-from . import secret
 from urllib.request import urlopen
-
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from django.core import serializers
-
 from .models import Stop
-
 
 # Create your views here.
 
 
 def index(request):
-    url = 'https://ckan.multimediagdansk.pl/dataset/c24aa637-3619-4dc2-a171-a23eec8f2172/resource/d3e96eb6-25ad-4d6c-8651-b1eb39155945/download/stopsingdansk.json'
+    url = 'https://ckan.multimediagdansk.pl/dataset/c24aa637-3619-4dc2-a171-a23eec8f2172/resource/d3e96eb6-25ad-4d6c' \
+          '-8651-b1eb39155945/download/stopsingdansk.json'
     response = urlopen(url)
     data_json = json.loads(response.read())
     ids = Stop.objects.all().values_list('stopId', flat=True)
@@ -31,7 +26,6 @@ def index(request):
     stops_dict = serializers.serialize('python', Stop.objects.all())
     context = {'stops': Stop.objects.all().order_by('stopName', 'subName'), 'stops_dict': stops_dict}
     return render(request, 'final/index.html', context)
-
 
 
 def trasa(request):

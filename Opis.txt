@@ -17,3 +17,5 @@ https://ckan.multimediagdansk.pl/dataset/tristar/resource/d3e96eb6-25ad-4d6c-865
 	- Czy czas dojścia na inny przystanek będzie szybszy niż czekanie na przystanku początkowym
 	- możliwość zmiany linii
 - Dane są aktualizowane (na razie z plików zapisanych lokalnie, później z danych pobieranych ze strony ZTM)
+- Wyświetlanie na mapie tych autobusów które przejeżdżają przez dane przystanki
+- Wyświetlanie pojazdów które przyjadą w ciągu najbliższej godziny

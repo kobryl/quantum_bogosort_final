@@ -1,3 +1,8 @@
+import datetime
+import json
+from time import strftime
+from urllib.request import urlopen
+
 from . import secret
 import requests
 
@@ -16,3 +21,9 @@ def calculate_estimated_travel_time(positionA, positionB):
     print(data)
     time = float(data["resourceSets"][0]["resources"][0]["results"][0]["travelDuration"]) / 1.5
     return time
+
+
+def get_data_from_json(url):
+    response = urlopen(url)
+    data_json = json.loads(response.read())
+    return data_json

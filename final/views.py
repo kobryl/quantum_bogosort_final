@@ -1,18 +1,13 @@
-import json
 from . import services
-from urllib.request import urlopen
 from django.shortcuts import render, redirect
 from django.core import serializers
 from .models import Stop
-
-# Create your views here.
 
 
 def index(request):
     url = 'https://ckan.multimediagdansk.pl/dataset/c24aa637-3619-4dc2-a171-a23eec8f2172/resource/d3e96eb6-25ad-4d6c' \
           '-8651-b1eb39155945/download/stopsingdansk.json'
-    response = urlopen(url)
-    data_json = json.loads(response.read())
+    data_json = services.get_data_from_json(url)
     ids = Stop.objects.all().values_list('stopId', flat=True)
     if Stop.lastUpdate is not None and Stop.lastUpdate < data_json['lastUpdate']:
         Stop.objects.all().delete()
@@ -23,6 +18,7 @@ def index(request):
             if Stop.lastUpdate or stop['stopId'] not in ids:
                 Stop.objects.create(stopId=stop['stopId'], stopName=stop['stopName'], subName=stop['subName'],
                                     stopLat=stop['stopLat'], stopLon=stop['stopLon'], nonpassenger=stop['nonpassenger'])
+    print(Stop.objects.all())
     stops_dict = serializers.serialize('python', Stop.objects.all())
     context = {'stops': Stop.objects.all().order_by('stopName', 'subName'), 'stops_dict': stops_dict}
     return render(request, 'final/index.html', context)

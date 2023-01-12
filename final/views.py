@@ -49,7 +49,6 @@ def calculate_estimated_travel_time(positionA, positionB):
 def trasa(request):
     if request.method == 'GET':
         return redirect('final:index')
-    print(request.POST)
     start_id = request.POST['start']
     start_name = Stop.objects.get(stopId=start_id).stopName + ' ' + Stop.objects.get(stopId=start_id).subName
     end_id = request.POST['end']

@@ -3,6 +3,7 @@ from urllib.request import urlopen
 
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
+from django.core import serializers
 
 from .models import Stop
 
@@ -24,7 +25,8 @@ def index(request):
             if Stop.lastUpdate or stop['stopId'] not in ids:
                 Stop.objects.create(stopId=stop['stopId'], stopName=stop['stopName'], subName=stop['subName'],
                                     stopLat=stop['stopLat'], stopLon=stop['stopLon'], nonpassenger=stop['nonpassenger'])
-    context = {'stops': Stop.objects.all()}
+    stops_dict = serializers.serialize('python', Stop.objects.all())
+    context = {'stops': Stop.objects.all(), 'stops_dict': stops_dict}
     return render(request, 'final/index.html', context)
 
 

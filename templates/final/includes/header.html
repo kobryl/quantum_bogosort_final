@@ -5,6 +5,8 @@
     <title>Title</title>
     {% load static %}
     <link rel="stylesheet" href="{% static '/main.css' %}">
+    {{ stops_dict|json_script:"stops-data" }}
+    <script src="{% static '/form.js' %}"></script>
 </head>
 <body>
     <header>

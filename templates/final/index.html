@@ -6,15 +6,15 @@
         <legend><h1>Znajdź drogę do celu</h1></legend>
         <div class="form-group-main">
             <label for="start">Punkt początkowy</label>
-            <select name="start" id="start">
-                <option value="0">Wybierz punkt początkowy</option>
+            <select name="start" id="start" required>
+                <option value="" disabled selected hidden>Wybierz punkt początkowy</option>
                 {% for stop in stops %}
                     <option value="{{stop.stopId}}">{{stop.stopName}} {{ stop.subName }}</option>
                 {% endfor %}
             </select>
             <label for="end">Punkt końcowy</label>
-            <select name="end" id="end">
-                <option value="0">Wybierz punkt końcowy</option>
+            <select name="end" id="end" required>
+                <option value="" disabled selected hidden>Wybierz punkt końcowy</option>
                 {% for stop in stops %}
                     <option value="{{stop.stopId}}">{{stop.stopName}} {{ stop.subName }}</option>
                 {% endfor %}

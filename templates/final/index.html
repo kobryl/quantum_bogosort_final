@@ -1,42 +1,56 @@
 {% include "final/includes/header.html" %}
 {% if request.method == 'GET' %}
+<h1>Znajdź drogę do celu</h1>
 <form action="{% url 'final:trasa' %}" method="post">
     {% csrf_token %}
-    <fieldset>
-        <legend><h1>Znajdź drogę do celu</h1></legend>
-        <div class="form-group-main">
-            <label for="start">Punkt początkowy</label>
-            <select name="start" id="start" required>
-                <option value="" disabled selected hidden>Wybierz punkt początkowy</option>
-                {% for stop in stops %}
-                    <option value="{{stop.stopId}}">{{stop.stopName}} {{ stop.subName }}</option>
-                {% endfor %}
-            </select>
-            <label for="end">Punkt końcowy</label>
-            <select name="end" id="end" required>
-                <option value="" disabled selected hidden>Wybierz punkt końcowy</option>
-                {% for stop in stops %}
-                    <option value="{{stop.stopId}}">{{stop.stopName}} {{ stop.subName }}</option>
-                {% endfor %}
-            </select>
+    <div class="form-container">
+        <div class="form-group-main form-group">
+            <div class="form-group-item">
+                <label for="start">Punkt początkowy</label>
+                <!--<select name="start" id="start" required>
+                    <option value="" disabled selected hidden>Wybierz punkt początkowy</option>
+                    {% for stop in stops %}
+                        <option value="{{stop.stopId}}">{{stop.stopName}} {{ stop.subName }}</option>
+                    {% endfor %}
+                </select>-->
+                <input type="text" name="start" id="start" required>
+            </div>
+            <div class="form-group-item">
+                <label for="end">Punkt końcowy</label>
+                <!--<select name="end" id="end" required>
+                    <option value="" disabled selected hidden>Wybierz punkt końcowy</option>
+                    {% for stop in stops %}
+                        <option value="{{stop.stopId}}">{{stop.stopName}} {{ stop.subName }}</option>
+                    {% endfor %}
+                </select>-->
+                <input type="text" name="end" id="end" required>
+            </div>
         </div>
-        <div class="form-group-additional">
-            <label for="max_changes">Maksymalna liczba przesiadek
-                <input type="number" name="max_changes" id="max_changes" value="0" min="0" max="10">
-            </label>
-
-            <label for="max_waiting_time"> Maksymalny czas oczekiwania na przesiadkę
-                <input type="number" name="max_waiting_time" id="max_waiting_time" value="0" min="0" max="1440">
-            </label>
-
-            <label for="max_distance_on_foot">Maksymalny dystans pieszo
-                <input type="number" name="max_distance_on_foot" id="max_distance_on_foot" value="0" min="0" max="10000">
-            </label>
+        <div class="form-group-additional form-group">
+            <h2>Dodatkowe parametry</h2>
+            <div class="form-group-item">
+                <label for="max_changes">Maksymalna liczba przesiadek
+                    <input type="number" id="max_changes" name="max_changes" value="0" min="0" max="10">
+                </label>
+            </div>
+            <div class="form-group-item">
+                <label for="max_waiting_time"> Maksymalny czas oczekiwania na przesiadkę
+                    <input type="number" id="max_waiting_time" name="max_waiting_time" value="0" min="0" max="1440">
+                </label>
+            </div>
+            <div class="form-group-item">
+                <label for="max_distance_on_foot">Maksymalny dystans pieszo
+                    <input type="number" id="max_distance_on_foot" name="max_distance_on_foot" value="0" min="0" max="10000">
+                </label>
+            </div>
         </div>
-        <div class="form-group-additional">
-            <input type="submit" value="Szukaj">
+        <div class="form-group-search form-group">
+            <div class="form-group-item">
+                <label for="search">Szukaj</label>
+                <input type="submit" value="Szukaj">
+            </div>
         </div>
-    </fieldset>
+    </div>
 </form>
 {% endif %}
 {% include "final/includes/footer.html" %}

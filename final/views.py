@@ -39,6 +39,10 @@ def calculate_estimated_travel_time(positionA, positionB):
 
     response = requests.get(url)
     data = response.json()
+    if data["statusCode"] >= 300:
+        return -1
+
+    print(data)
     time = float(data["resourceSets"][0]["resources"][0]["results"][0]["travelDuration"])/1.5
     return time
 

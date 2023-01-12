@@ -45,10 +45,14 @@ def get_possible_routes(stop1, stop2):
         elif i['stopId'] == stop2:
             stop2routes.append(i)
     routes = []
+    print(stop1routes)
+    print(stop2routes)
     for i in stop1routes:
-        if i in stop2routes and i['routeId'] not in routes \
-                and i['stopSequence'] < stop2routes[stop2routes.index(i)]['stopSequence']:
-            routes.append(i['routeId'])
+        for j in stop2routes:
+            if i['routeId'] == j['routeId'] and i['stopSequence'] < j['stopSequence']:
+                routes.append(i['tripId'])
+                stop2routes.remove(j)
+    print(routes)
     return routes
 
 

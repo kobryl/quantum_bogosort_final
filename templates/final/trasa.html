@@ -49,9 +49,17 @@
     </div> -->
     <div class="route-found">
         <h3>Trasa od {{ start_name }} do {{ end_name }} została znaleziona.</h3>
-        <p>
-            <!-- tu obsługa danych od Olka -->
-        </p>
+        <ol class="step-list">
+            {% for step in route %}
+                <li class="step-list-item">
+                {% if step.line == -1 %}
+                    Przejdź pieszo z {{ step.stop1 }} do {{ step.stop2 }}.
+                {% else %}
+                    Wsiądź na {{ step.stop1 }} do {{ step.line }} i wysiadź na {{ step.stop2 }}.
+                {% endif %}
+                </li>
+            {% endfor %}
+        </ol>
     </div>
 {% endif %}
 {% include 'final/includes/footer.html' %}

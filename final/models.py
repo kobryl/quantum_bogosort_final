@@ -17,3 +17,12 @@ class Stop(models.Model):
 
     def __str__(self):
         return self.stopName + ' ' + self.subName
+
+class Route(models.Model):
+    stop1 = models.IntegerField()
+    stop2 = models.IntegerField()
+    line = models.CharField(max_length=20)
+
+    def __str__(self):
+        return str(self.stop1) + ' -> ' + str(self.stop2) + ' l: ' + self.line
+

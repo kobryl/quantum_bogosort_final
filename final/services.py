@@ -1,4 +1,8 @@
+import datetime
 import json
+import os
+from time import strftime
+
 import requests
 from django.shortcuts import render, redirect
 from django.core import serializers
@@ -65,10 +69,15 @@ def get_serialized_stop_info():
     return stops_dict
 
 
-# TODO to dokończyć jak olek skończy
 def create_path(start, end, max_changes, max_waiting_time, max_distance_on_foot):
-    # tu bedzie komunikacja z algorytmem
+    print("test")
     route = []
+    with open('tmp.tmp', 'w') as f:
+        f.write(start + " " + end + " " + get_time())
+    os.system('hackathon.exe')
+    with open('result.txt', 'r') as f:
+        for line in f:
+            route.append(line)
     stop1 = Stop.objects.get(stopId=start)
     stop2 = Stop.objects.get(stopId=end)
     start_name = stop1.stopName + " " + stop1.subName
@@ -78,7 +87,6 @@ def create_path(start, end, max_changes, max_waiting_time, max_distance_on_foot)
         stop2 = Stop.objects.get(stopId=step['stop2'])
         start_name = stop1.stopName + " " + stop1.subName
         end_name = stop2.stopName + " " + stop2.subName
-        #algo olka tf. Później odkomentować i ogarnąć
         line=''
         route.append(Route.objects.create(stop1=start_name, stop2=end_name, line=line))
     context = {'start_id': start, 'end_id': end, 'max_changes': max_changes,
@@ -87,9 +95,10 @@ def create_path(start, end, max_changes, max_waiting_time, max_distance_on_foot)
     return context
 
 
-#def get_time():
-#    date = datetime.datetime.now()
-#    return strftime("%H:%M")
+def get_time():
+    date = datetime.datetime.now()
+    return strftime("%H:%M:%S")
+
 #def get_today():
 #    return datetime.datetime.today().isoformat()[0:10]
 #def get_possible_routes(stop1, stop2):

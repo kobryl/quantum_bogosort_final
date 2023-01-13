@@ -3,5 +3,63 @@
             <p>&copy; 2023 Quantum Bogosort</p>
         </div>
     </footer>
+
+    <div id="incidents-popup">
+        <div class="incidents-popup-content">
+            <p id="incidents-text">Na obecną chwilę nie ma żadnych ogłoszeń.<br>Zyczymy miłego dnia :)</p>
+            <a class="incidents-popup-close">&#9587;</a>
+        </div>
+    </div>
+
+    <div id="incidents-button">!</div>
+    <script>
+        function showIncidents() {
+            let text = "Na obecną chwilę nie ma żadnych ogłoszeń.<br>Zyczymy miłego dnia :)";
+            document.getElementById("incidents-text").innerHTML = text;
+            document.getElementById("incidents-popup").style.display = "block";
+            window.setTimeout(function(){
+                document.getElementById("incidents-popup").style.opacity = 1;
+            }, 50);
+            //let popup = constructPopup(text);
+            //document.querySelector("body").appendChild(popup);
+        }
+
+
+        /*function constructPopup(text) {
+            let popup = document.createElement("div");
+            popup.classList.add("incidents-popup");
+
+            let popupContent = document.createElement("div");
+            popupContent.classList.add("incidents-popup-content");
+            popup.appendChild(popupContent);
+
+            let popupText = document.createElement("p");
+            popupText.innerHTML = text;
+            popupContent.appendChild(popupText);
+
+            let closePopupButton = document.createElement("a");
+            closePopupButton.classList.add("incidents-popup-close");
+            closePopupButton.innerHTML = "&#9587;";
+            closePopupButton.addEventListener("click", hidePopup());
+            popupContent.appendChild(closePopupButton);
+
+            return popup;
+        }*/
+
+
+        function hidePopup() {
+            document.getElementById("incidents-popup").style.opacity = 0;
+            window.setTimeout(function(){
+                document.getElementById("incidents-popup").style.display = "none";
+            }, 550);
+        }
+
+
+        let incidentsButton = document.getElementById("incidents-button");
+        incidentsButton.addEventListener("click", showIncidents);
+        
+        let incidentsCloseButton = document.querySelector("#incidents-popup .incidents-popup-close");
+        incidentsCloseButton.addEventListener("click", hidePopup);
+    </script>
 </body>
 </html>

@@ -7,46 +7,6 @@
             maksymalny dystans do pokonania pieszo: {{ max_distance_on_foot }}).</p>
     </div>
 {% else %}
-    <!-- GITHUB <div class="route">
-        <h1>Trasa pomiędzy {{ start_name }} a {{ end_name }}</h1>
-        <p>Trasa została wyznaczona zgodnie z podanymi kryteriami (maksymalna liczba przesiadek: {{ max_changes }},
-            maksymalny czas oczekiwania na przesiadkę: {{ max_waiting_time }}, maksymalny dystans do pokonania pieszo:
-            {{ max_distance_on_foot }}).</p>
-        <div class="route-details">
-            <div class="route-details__item">
-                <h2>Przystanki</h2>
-                <ul>
-                    {% for stop in route.stops %#}
-                        <li>{{ stop.name }}</li>
-                    {% endfor %#}
-                </ul>
-            </div>
-            <div class="route-details__item">
-                <h2>Linie</h2>
-                <ul>
-                    {% for line in route.lines %}
-                        <li>{{ line.name }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="route-details__item">
-                <h2>Przesiadki</h2>
-                <ul>
-                    {% for change in route.changes %}
-                        <li>{{ change.name }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="route-details__item">
-                <h2>Czas przejazdu</h2>
-                <p>{{ route.duration }}</p>
-            </div>
-            <div class="route-details__item">
-                <h2>Dystans</h2>
-                <p>{{ route.distance }}</p>
-            </div>
-        </div>
-    </div> -->
     <div class="route-found">
         <h3>Trasa od {{ start_name }} do {{ end_name }} została znaleziona.</h3>
         <ol class="step-list">

@@ -16,6 +16,7 @@ h1 {
     margin-bottom: 60px;
     margin-top: 40px;
     font-weight: 400;
+    font-size: 38px;
 }
 
 form h2 {
@@ -24,6 +25,10 @@ form h2 {
     margin: 0 0 30px 0;
     color: #666;
     font-weight: 400;
+}
+
+input {
+    font-family: 'Noto Sans'
 }
 
 /*form h2::after,
@@ -98,6 +103,22 @@ form h2:after {
     display: none;
 }
 
+.form-group-search input {
+    border-radius: 30px;
+    height: 55px;
+    background: #02C1DE;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.form-group-search input:hover {
+    background: #07B3CE;
+}
+
 .stop-list {
     max-height: 250px;
     width: 250px;
@@ -121,7 +142,7 @@ form h2:after {
 
 .autocomplete-active,
 .stop-element:hover {
-    background: #bdd8f2;
+    background: #C5EFF6;
 }
 
 span.stop-match {

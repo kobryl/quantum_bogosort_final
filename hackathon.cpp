@@ -95,6 +95,7 @@ class ShortestDistanceCalculator {
 
     int bus_stops_count = 0;
     int trip_id_count = 0;
+    int searched_time = 0;
     int destination_bus_stop;
     std::vector<std::string> tripIds;
 
@@ -103,7 +104,12 @@ public:
     void loadData();
     void findPath(int source);
     void setDestination(int destination);
+    void setTime(int time);
 };
+
+void ShortestDistanceCalculator::setTime(int time) {
+    searched_time = time;
+}
 
 int stringClockToInt(std::string& clock) {
     int result = 0;
@@ -117,7 +123,7 @@ int stringClockToInt(std::string& clock) {
 }
 
 void ShortestDistanceCalculator::setDestination(int destination) {
-    destination_bus_stop = destination;
+    destination_bus_stop = bus_stops_ids[destination];
 }
 
 void ShortestDistanceCalculator::processRoutes() {
@@ -157,7 +163,7 @@ void ShortestDistanceCalculator::processRoutes() {
         day = service_days[service_id];
         if (trip_to_int.count(trip_id) == 0)
             trip_to_int[trip_id] = trip_id_count++;
-        if (bus_stops_ids.count(stop_id) == 0){
+        if (bus_stops_ids.count(stop_id) == 0) {
             bus_stops_ids[stop_id] = bus_stops_count;
             short_to_long_id[bus_stops_count] = stop_id;
             bus_stops_count++;
@@ -178,7 +184,7 @@ void ShortestDistanceCalculator::processRoutes() {
         trips_ids << element.second << " " << element.first << "\n";
     }
 
-    processed_stop_times.open("data/20230112processed_data.txt");
+    processed_stop_times.open("data/20230113processed_data.txt");
     for (std::pair<int, int> element : short_to_long_id) {
         processed_short_to_longs << element.first << " " << element.second << "\n";
     }
@@ -197,7 +203,7 @@ void ShortestDistanceCalculator::processRoutes() {
     }
     std::sort(info.begin(), info.end(), customCompare);
     processed_stop_times.close();
-    processed_data.open("data/20230112processed_dataInfo.txt");
+    processed_data.open("data/processed_dataInfo.txt");
     for (int i = 0; i < info.size(); i++) {
         processed_data << info[i].route_id << " " << info[i].arrival << " " << info[i].departure << " " << info[i].destination << " " << info[i].stop_id << " " << info[i].duration << "\n";
     }
@@ -207,7 +213,7 @@ void ShortestDistanceCalculator::processRoutes() {
 void ShortestDistanceCalculator::loadData() {
     int trip_id;
     int day, arrival, departure, stop_id, destination, duration;
-    std::ifstream processed_data("data/20230112processed_dataInfo.txt");
+    std::ifstream processed_data("data/processed_dataInfo.txt");
     int last_stop_id, last_departure, last_arrival;
     int max_id = 0;
     while (processed_data >> trip_id >> arrival >> departure >> destination >> stop_id >> duration) {
@@ -223,7 +229,7 @@ void ShortestDistanceCalculator::loadData() {
     while (vertices.size() < max_id * 30 + 30)
         vertices.push_back({ false, 0, 0, -1, -1, 0 });
     processed_data.close();
-    processed_data.open("data/20230112processed_dataInfo.txt");
+    processed_data.open("data/processed_dataInfo.txt");
     while (processed_data >> trip_id >> arrival >> departure >> destination >> stop_id >> duration) {
         while (vertex_count.size() <= stop_id)
             vertex_count.push_back(0);
@@ -264,6 +270,8 @@ void ShortestDistanceCalculator::loadData() {
     int short_id, long_id;
     while (short_to_longs >> short_id >> long_id) {
         short_to_long_id[short_id] = long_id;
+        bus_stops_ids[long_id] = short_id;
+
     }
 }
 
@@ -305,6 +313,11 @@ void dijkstras(int source_node, int dest_node, int node_count, std::vector<std::
             best = dist[i];
     }
     std::vector<std::pair<int, int>> output;
+    if (best == 0) {
+        std::ofstream out("output");
+        out << "";
+        return;
+    }
     for (int i = dest_node * 30; i < dest_node * 30 + 30; i++) {
         if (dist[i] == best) {
             i = vertices[i].parent;
@@ -328,21 +341,19 @@ void dijkstras(int source_node, int dest_node, int node_count, std::vector<std::
     }
 
     for (int i = 0; i < output.size(); i++) {
-        if( (skip[i] && i > 0 && !skip[i - 1]) || (i > 0 && !skip[i] && !skip[i - 1])) {
-            found_path << output[i].second << " ";
+        if ((skip[i] && i > 0 && !skip[i - 1]) || (i > 0 && !skip[i] && !skip[i - 1])) {
+            found_path << int_to_trip[output[i].second] << " ";
         }
-        if(!skip[i])
+        if (!skip[i])
             found_path << short_to_long_id[output[i].first] << " ";
     }
-
-
-    
-
 
 }
 
 void ShortestDistanceCalculator::findPath(int source) {
-    dijkstras(source, destination_bus_stop, vertices.size(), edges);
+    vertices[source].arrival = searched_time;
+    vertices[source].departure = searched_time;
+    dijkstras(bus_stops_ids[source], destination_bus_stop, vertices.size(), edges);
 }
 
 void generateProcessedFiles() {
@@ -352,9 +363,14 @@ void generateProcessedFiles() {
 }
 
 int main() {
-     //generateProcessedFiles();
+    //generateProcessedFiles();
     ShortestDistanceCalculator my_calculator;
-    my_calculator.setDestination(2);
+    std::string time;
+    int target, source;
+    std::ifstream input("input.txt");
+    input >> target >> source >> time;
     my_calculator.loadData();
-    my_calculator.findPath(0);
+    my_calculator.setDestination(target);
+    my_calculator.setTime(stringClockToInt(time));
+    my_calculator.findPath(source);
 }

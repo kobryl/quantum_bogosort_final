@@ -6,43 +6,34 @@ window.addEventListener("load", function(){
     function autocompleteField(nameField, idField) {
         let currentlyFocusedStop;
 
+
         nameField.addEventListener("input", function(e){
             let value = this.value;
             if (!value) return false;
-    
-            closeOtherLists(nameField.parentNode);
 
+            closeOtherLists(nameField.parentNode, null);
             if (value.length >= minCharacters) {
-                currentlyFocusedStop = -1;
-                let stopList = document.createElement("div");
-                stopList.setAttribute("id", nameField.id + "-list");
-                stopList.setAttribute("class", "stop-list");
-                nameField.parentNode.appendChild(stopList);
-    
-                for (let i = 0; i < stops.length; i++) {
-                    let stopName = stops[i].fields.stopName + " " + stops[i].fields.subName;
-                    if (stopName.substring(0, value.length).toLowerCase() == value.toLowerCase()) {
-                        let stopElement = document.createElement("div");
-                        stopElement.setAttribute("class", "stop-element");
-                        stopElement.innerHTML = "<span class='stop-match'>" + stopName.substring(0, value.length) + "</span>";
-                        stopElement.innerHTML += stopName.substring(value.length);
-                        stopElement.innerHTML += "<input type='hidden' value='" + stops[i].pk + "'>";
-                        stopElement.addEventListener("click", function(e) {
-                            nameField.value = stopName;
-                            idField.value = stops[i].pk;
-                            closeOtherLists(null);
-                        });
-                        stopList.appendChild(stopElement);
-                    }
-                }
+                createStopList(nameField, idField, value);
             }
         });
+    
+
+        nameField.addEventListener("click", function(e) {
+            let value = this.value;
+            if (!value) return false;
+
+            closeOtherLists(nameField.parentNode, null);
+            if (value.length >= minCharacters && !document.getElementById(nameField.id + "-list")) {
+                createStopList(nameField, idField, value);
+            }
+        });
+
 
         nameField.addEventListener("keydown", function(e){
             if (document.getElementById(nameField.id + "-list")) {
                 let stopList = document.getElementById(nameField.id + "-list");
                 let currentElements = stopList.querySelectorAll("div");
-                if (e.keyCode == 40) {      // down arrow key
+                if (e.keyCode == 40) {          // down arrow key
                     currentlyFocusedStop++;
                     setActive(currentElements);
                 }
@@ -60,6 +51,34 @@ window.addEventListener("load", function(){
         });
 
 
+        function createStopList(nameField, idField, value) {
+            currentlyFocusedStop = -1;
+            let stopList = document.createElement("div");
+            stopList.setAttribute("id", nameField.id + "-list");
+            stopList.setAttribute("class", "stop-list");
+            nameField.parentNode.appendChild(stopList);
+
+            for (let i = 0; i < stops.length; i++) {
+                let stopName = stops[i].fields.stopName + " " + stops[i].fields.subName;
+                if (stopName.substring(0, value.length).toLowerCase() == value.toLowerCase()) {
+                    let stopElement = document.createElement("div");
+                    stopElement.setAttribute("class", "stop-element");
+                    stopElement.innerHTML = "<span class='stop-match'>" + stopName.substring(0, value.length) + "</span>";
+                    stopElement.innerHTML += stopName.substring(value.length);
+                    stopElement.innerHTML += "<input type='hidden' value='" + stops[i].pk + "'>";
+                    stopElement.addEventListener("click", function(e) {
+                        nameField.value = stopName;
+                        idField.value = stops[i].pk;
+                        closeOtherLists(null, null);
+                    });
+                    stopList.appendChild(stopElement);
+                }
+            }
+            
+            if (stopList.childNodes.length > 0) stopList.classList.add("stop-list-shadow");
+        }
+
+
         function setActive(elements) {
             if (!elements) return false;
 
@@ -74,11 +93,12 @@ window.addEventListener("load", function(){
     }
 
 
-    function closeOtherLists(element) {
+    function closeOtherLists(element, eventType) {
         let lists = document.querySelectorAll(".stop-list");
         for (let i = 0; i < lists.length; i++) {
             if (element != null) {
-                if (element != lists[i]) {
+                if (element != lists[i] && 
+                    (!(element == lists[i].parentNode.querySelector(".autocomplete-name") && eventType == "click"))) {
                     lists[i].parentNode.removeChild(lists[i]);
                 }
             } 
@@ -90,7 +110,7 @@ window.addEventListener("load", function(){
 
 
     document.addEventListener("click", function (e) {
-        closeOtherLists(e.target);
+        closeOtherLists(e.target, e.type);
     });
 
 

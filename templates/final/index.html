@@ -1,7 +1,7 @@
 {% include "final/includes/header.html" %}
 {% if request.method == 'GET' %}
 <h1>Droga do celu</h1>
-<form action="{% url 'final:trasa' %}" method="post">
+<form action="{% url 'final:create_path' %}" method="post">
     {% csrf_token %}
     <div class="form-container">
         <div class="form-group-main form-group">
@@ -39,7 +39,14 @@
         </div>
     </div>
 </form>
-
+<div>
+     <iframe width="700" height="500" src="https://www.bing.com/maps/embed?h=500&w=700&cp=54.00010108488799~3524.000015258789&lvl=11&typ=d&sty=r&src=SHELL&FORM=MBEDV8" scrolling="no">
+     </iframe>
+     <div style="white-space: nowrap; text-align: center; width: 500px; padding: 6px 0; margin-left: 300px">
+        <a id="largeMapLink" target="_blank" href="https://www.bing.com/maps?cp=54.00010108488799~3524.000015258789&amp;sty=r&amp;lvl=11&amp;FORM=MBEDLD">Wyświetl większą mapę</a> &nbsp; | &nbsp;
+        <a id="dirMapLink" target="_blank" href="https://www.bing.com/maps/directions?cp=54.00010108488799~3524.000015258789&amp;sty=r&amp;lvl=11&amp;rtp=~pos.54.00010108488799_3524.000015258789____&amp;FORM=MBEDLD">Pobierz wskazówki</a>
+    </div>
+</div>
     <div id="map" style="width: 600px; height: 400px;"></div>
     <div id="popup" class="ol-popup">
          <a href="#" id="popup-closer" class="ol-popup-closer"></a>

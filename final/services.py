@@ -73,9 +73,9 @@ def create_path(start, end, max_changes, max_waiting_time, max_distance_on_foot)
     stop2 = Stop.objects.get(stopId=end)
     start_name = stop1.stopName + " " + stop1.subName
     end_name = stop2.stopName + " " + stop2.subName
-    for _ in _:
-        stop1 = Stop.objects.get(stopId=_['stop1'])
-        stop2 = Stop.objects.get(stopId=_['stop2'])
+    for step in route:
+        stop1 = Stop.objects.get(stopId=step['stop1'])
+        stop2 = Stop.objects.get(stopId=step['stop2'])
         start_name = stop1.stopName + " " + stop1.subName
         end_name = stop2.stopName + " " + stop2.subName
         #algo olka tf. Później odkomentować i ogarnąć

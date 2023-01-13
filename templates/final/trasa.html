@@ -1,25 +1,26 @@
 {% include 'final/includes/header.html' %}
 {% if not route %}
-    <div class="route-not-found">
+    <div class="route-not-found route-info">
         <h1>Nie znaleziono trasy</h1>
-        <p>Przepraszamy, nie znaleźliśmy trasy pomiędzy {{ start_name }} a {{ end_name }} spełniającej podane kryteria
-            (maksymalna liczba przesiadek: {{ max_changes }}, maksymalny czas oczekiwania na przesiadkę: {{ max_waiting_time }}
-            maksymalny dystans do pokonania pieszo: {{ max_distance_on_foot }}).</p>
+        <p>Przepraszamy, nie znaleźliśmy trasy pomiędzy <span class="route-start-name route-text-info">{{ start_name }}</span> a <span class="route-end-name route-text-info">{{ end_name }}</span> spełniającej podane kryteria: </p>
+        <p>(maksymalna liczba przesiadek: <span class="route-text-info">{{ max_changes }}</span>, maksymalny czas oczekiwania na przesiadkę: <span class="route-text-info">{{ max_waiting_time }}</span>,
+            maksymalny dystans do pokonania pieszo: <span class="route-text-info">{{ max_distance_on_foot }}</span>).</p>
     </div>
 {% else %}
-    <div class="route-found">
-        <h3>Trasa od {{ start_name }} do {{ end_name }} została znaleziona.</h3>
+    <div class="route-found route-info">
+        <h3>Trasa od <span class="route-start-name route-text-info">{{ start_name }}</span> do <span class="route-end-name route-text-info">{{ end_name }}</span> została znaleziona.</h3>
         <ol class="step-list">
             {% for step in route %}
                 <li class="step-list-item">
                 {% if step.line == -1 %}
-                    Przejdź pieszo z {{ step.stop1 }} do {{ step.stop2 }}.
+                    <span class="li-container">Przejdź pieszo z <span class="route-text-info">{{ step.stop1 }}</span> do <span class="route-text-info">{{ step.stop2 }}</span>.</span>
                 {% else %}
-                    Wsiądź na {{ step.stop1 }} do {{ step.line }} i wysiadź na {{ step.stop2 }}.
+                    <span class="li-container">Wsiądź na <span class="route-text-info">{{ step.stop1 }}</span> do pojazdu linii <span class="route-text-info">{{ step.line }}</span> i wysiadź na <span class="route-text-info">{{ step.stop2 }}</span>.</span>
                 {% endif %}
                 </li>
             {% endfor %}
         </ol>
     </div>
 {% endif %}
+<a href="/" class="return-button">Powrót do strony głównej</a>
 {% include 'final/includes/footer.html' %}

@@ -149,7 +149,115 @@ span.stop-match {
     font-weight: bold;
 }
 
+.route-info {
+    max-width: 1000px;
+    display: block;
+    margin: 0 auto;
+}
+
+.route-not-found p {
+    text-align: center;
+}
+
+.route-text-info {
+    font-weight: bold;
+}
+
+.route-found h3 {
+    text-align: center;
+    margin: 40px 0 60px 0;
+}
+
+.route-found li::marker {
+    color: black;
+    font-size: 20px;
+}
+
+.route-found li {
+    position: relative;
+    margin-bottom: 0;
+    padding-bottom: 50px;
+    padding-left: 45px;
+    list-style-position: oustide;
+}
+
+.route-found li:after {
+    content: " ";
+    position: absolute;
+    left: 0.5px;
+    top: 2px;
+    background: #02C1DE;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    z-index: -10;
+}
+
+.route-found li:first-child:after,
+.route-found li:last-child:after {
+    width: 40px;
+    height: 40px;
+    left: -6px;
+    top: -6px;
+}
+
+.route-found li:first-child,
+.route-found li:last-child {
+    list-style-position: inside;
+    padding-left: 7px;
+}
+
+.route-found li:first-child::marker,
+.route-found li:last-child::marker {
+    color: white
+}
+
+.route-found li:first-child .li-container,
+.route-found li:last-child .li-container {
+    padding-left: 12px;
+}
+
+.route-found li:before {
+    content: " ";
+    position: absolute;
+    left: 12px;
+    border-left: 3px dashed #02C1DE;
+    height: 100%;
+    width: 1px;
+    z-index: -20;
+}
+
+.route-found li:first-child:before {
+    top: 6px;
+}
+
+.route-found li:last-child:before {
+    height: 6px;
+}
+
+.return-button {
+    display: block;
+    border-radius: 30px;
+    height: 55px;
+    background: #02C1DE;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    width: 300px;
+    text-align: center;
+    line-height: 50px;
+    text-decoration: none;
+    margin: 50px auto;
+}
+
+.return-button:hover {
+    background: #07B3CE;
+}
+
 footer {
     text-align: center;
     color: #aaa;
+    margin-top: 50px;
 }

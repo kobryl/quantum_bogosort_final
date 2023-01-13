@@ -26,3 +26,11 @@ class Route(models.Model):
     def __str__(self):
         return str(self.stop1) + ' -> ' + str(self.stop2) + ' l: ' + self.line
 
+
+class Incident(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.CharField(max_length=250)
+    date = models.DateField()
+
+    def __str__(self):
+        return str(self.title)

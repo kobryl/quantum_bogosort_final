@@ -99,3 +99,10 @@ def get_info_about_stop(stopIdList):
             result.append(info[i]["stopDesc"] + " " + info[i]["subName"])
     return result
 
+
+def get_info_about_incidents():
+    url = 'https://files.cloudgdansk.pl/d/otwarte-dane/ztm/bsk.json'
+    info = get_data_from_json(url)["komunikaty"]
+    return info
+
+

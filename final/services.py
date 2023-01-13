@@ -65,8 +65,8 @@ def get_serialized_stop_info():
     return stops_dict
 
 
-#TODO to dokończyć jak olek skończy
-def trasa(start, end, max_changes, max_waiting_time, max_distance_on_foot):
+# TODO to dokończyć jak olek skończy
+def create_path(start, end, max_changes, max_waiting_time, max_distance_on_foot):
     pass
     # tu bedzie komunikacja z algorytmem
     #route = []

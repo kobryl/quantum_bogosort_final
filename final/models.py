@@ -4,6 +4,7 @@ from urllib.request import urlopen
 from django.contrib.sites import requests
 from django.db import models
 
+
 # Create your models here.
 
 class Stop(models.Model):
@@ -17,6 +18,7 @@ class Stop(models.Model):
 
     def __str__(self):
         return self.stopName + ' ' + self.subName
+
 
 class Route(models.Model):
     stop1 = models.IntegerField()

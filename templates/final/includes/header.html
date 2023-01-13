@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Znajdź drogę do celu</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static '/main.css' %}">
     {{ stops_dict|json_script:"stops-data" }}
     <script src="{% static '/form.js' %}"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">

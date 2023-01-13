@@ -11,10 +11,6 @@ form {
     margin: 0 auto;
 }
 
-.form-container {
-    
-}
-
 h1 {
     text-align: center;
     margin-bottom: 60px;
@@ -25,7 +21,7 @@ h1 {
 form h2 {
     overflow: hidden;
     text-align: center;
-    margin: 40px 0;
+    margin: 0 0 30px 0;
     color: #666;
     font-weight: 400;
 }
@@ -56,9 +52,49 @@ form h2:after {
     flex-direction: row;
     justify-content: space-around;
     border: #c8c8c8 1px solid;
-    border-radius: 25px;
-    margin: 30px 0;
+    border-radius: 15px;
+    margin: 40px 0;
     padding: 30px;
+}
+
+.form-group-item label {
+    display: block;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.form-group-additional {
+    flex-wrap: wrap;
+}
+
+.form-group-additional h2 {
+    flex-basis: 100%;
+}
+
+.form-group-item input {
+    border: 1px solid #bbb;
+    background: #fff;
+    height: 45px;
+    width: 180px;
+    box-shadow: inset 0px 0px 2px 3px rgba(0, 0, 0, 0.04);
+    margin: 0 auto;
+    display: block;
+    padding: 10px 15px;
+    box-sizing: border-box;
+}
+
+.form-group-main input {
+    width: 250px;
+}
+
+.form-group-search {
+    border: none;
+    margin: 60px 0;
+    padding: 0;
+}
+
+.form-group-search label {
+    display: none;
 }
 
 footer {

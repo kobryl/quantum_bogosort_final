@@ -80,7 +80,7 @@ def create_path(start, end, max_changes, max_waiting_time, max_distance_on_foot)
         end_name = stop2.stopName + " " + stop2.subName
         #algo olka tf. Później odkomentować i ogarnąć
         line=''
-        route.append(Route.objects.create(stop1=stop1, stop2=stop2, line=line))
+        route.append(Route.objects.create(stop1=start_name, stop2=end_name, line=line))
     context = {'start_id': start, 'end_id': end, 'max_changes': max_changes,
                'max_waiting_time': max_waiting_time, 'max_distance_on_foot': max_distance_on_foot,
                'start_name': start_name, 'end_name': end_name, 'route': route}

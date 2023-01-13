@@ -21,8 +21,8 @@ class Stop(models.Model):
 
 
 class Route(models.Model):
-    stop1 = models.IntegerField()
-    stop2 = models.IntegerField()
+    stop1 = models.CharField(max_length=400)
+    stop2 = models.CharField(max_length=400)
     line = models.CharField(max_length=20)
 
     def __str__(self):

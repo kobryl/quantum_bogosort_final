@@ -168,6 +168,11 @@ span.stop-match {
     margin: 40px 0 60px 0;
 }
 
+.route-found ol {
+    position: relative;
+    left: 40px;
+}
+
 .route-found li::marker {
     color: black;
     font-size: 20px;

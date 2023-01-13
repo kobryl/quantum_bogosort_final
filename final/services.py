@@ -22,7 +22,6 @@ def calculate_estimated_travel_time(positionA, positionB):
     if data["statusCode"] >= 300:
         return -1
 
-    print(data)
     time = float(data["resourceSets"][0]["resources"][0]["results"][0]["travelDuration"]) / 1.5
     return time
 
@@ -45,14 +44,11 @@ def get_possible_routes(stop1, stop2):
         elif i['stopId'] == stop2:
             stop2routes.append(i)
     routes = []
-    print(stop1routes)
-    print(stop2routes)
     for i in stop1routes:
         for j in stop2routes:
             if i['routeId'] not in routes and i['routeId'] == j['routeId'] and i['stopSequence'] < j['stopSequence']:
                 routes.append(i['routeId'])
                 stop2routes.remove(j)
-    print(routes)
     return routes
 
 
@@ -71,3 +67,4 @@ def get_data_from_json(url):
     response = urlopen(url)
     data_json = json.loads(response.read())
     return data_json
+

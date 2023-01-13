@@ -26,6 +26,11 @@ def calculate_estimated_travel_time(positionA, positionB):
     return time
 
 
+def get_time():
+    date = datetime.datetime.now()
+    return strftime("%H:%M")
+
+
 def get_today():
     return datetime.datetime.today().isoformat()[0:10]
 
@@ -67,4 +72,36 @@ def get_data_from_json(url):
     response = urlopen(url)
     data_json = json.loads(response.read())
     return data_json
+
+
+def find_transport_routeId_with_fastest_arrival_time(stop, destination):
+    departures = []
+    departures_routeId = []
+    routes = get_possible_routes(stop, destination)
+    url = 'http://ckan2.multimediagdansk.pl/departures?stopId=' + str(stop)
+    json_data = get_data_from_json(url)
+
+    data = json_data["departures"]
+    if len(data) == 0:
+        return 0
+    departures.append(data[0]["estimatedTime"][11:19])
+    departures_routeId.append(data[0]["routeId"])
+
+
+def get_info_about_stop(stopIdList):
+    url = 'https://ckan.multimediagdansk.pl/dataset/c24aa637-3619-4dc2-a171-a23eec8f2172/resource/d3e96eb6-25ad-4d6c' \
+          '-8651-b1eb39155945/download/stopsingdansk.json'
+    info = get_data_from_json(url)["stops"]
+    result = []
+    for i in range(len(info)):
+        if info[i]["stopId"] in stopIdList:
+            result.append(info[i]["stopDesc"] + " " + info[i]["subName"])
+    return result
+
+
+def get_info_about_incidents():
+    url = 'https://files.cloudgdansk.pl/d/otwarte-dane/ztm/bsk.json'
+    info = get_data_from_json(url)["komunikaty"]
+    return info
+
 

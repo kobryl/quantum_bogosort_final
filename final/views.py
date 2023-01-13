@@ -13,4 +13,10 @@ def index(request):
 
 def trasa(request):
     if request.method == 'POST':
-        return redirect('final:index')
+        start = request.POST['starting-route']
+        end = request.POST['ending-route']
+        max_changes = request.POST['max_changes']
+        max_waiting_time = request.POST['max_waiting_time']
+        max_distance_on_foot = request.POST['max_distance_on_foot']
+        services.trasa(start, end, max_changes, max_waiting_time, max_distance_on_foot)
+    return render(request, 'final/index.html')

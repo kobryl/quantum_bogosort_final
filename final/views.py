@@ -23,7 +23,7 @@ def index(request):
     print(Stop.objects.all())
     stops_dict = serializers.serialize('python', Stop.objects.all())
     context = {'stops': Stop.objects.all().order_by('stopName', 'subName'), 'stops_dict': stops_dict}
-    get_possible_routes(2018, 2016)
+    #get_possible_routes(2018, 2016)    # to spowalnia o 8 sekund cały program
     return render(request, 'final/index.html', context)
 
 
@@ -42,9 +42,10 @@ def trasa(request):
     for _ in _:
         stop1 = Stop.objects.get(stopId=_['stop1'])
         stop2 = Stop.objects.get(stopId=_['stop2'])
-        best_route = find_transport_with_fastest_arrival_time(stop1, stop2)
-        line = services.get_route_number_by_id(best_route)
-        route.append(Route.objects.create(stop1=stop1, stop2=stop2, line=line))
+        #best_route = find_transport_with_fastest_arrival_time(stop1, stop2)
+        #algo olka tf. Później odkomentować i ogarnąć
+        #line = services.get_route_number_by_id(best_route)
+        #route.append(Route.objects.create(stop1=stop1, stop2=stop2, line=line))
     context = {'start_id': start_id, 'end_id': end_id, 'max_changes': max_changes,
                'max_waiting_time': max_waiting_time, 'max_distance_on_foot': max_distance_on_foot,
                'start_name': start_name, 'end_name': end_name, 'route': route}

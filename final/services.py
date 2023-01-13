@@ -65,19 +65,11 @@ def get_serialized_stop_info():
     return stops_dict
 
 
-#TODO to dokończyć jak olek skończy
-def trasa():
-    if request.method == 'GET':
-        return redirect('final:index')
-    start_id = request.POST['start']
-    start_name = Stop.objects.get(stopId=start_id).stopName + ' ' + Stop.objects.get(stopId=start_id).subName
-    end_id = request.POST['end']
-    end_name = Stop.objects.get(stopId=end_id).stopName + ' ' + Stop.objects.get(stopId=end_id).subName
-    max_changes = request.POST['max_changes']
-    max_waiting_time = request.POST['max_waiting_time']
-    max_distance_on_foot = request.POST['max_distance_on_foot']
+# TODO to dokończyć jak olek skończy
+def create_path(start, end, max_changes, max_waiting_time, max_distance_on_foot):
+    pass
     # tu bedzie komunikacja z algorytmem
-    route = []
+    #route = []
     #for _ in _:
     #    stop1 = Stop.objects.get(stopId=_['stop1'])
     #    stop2 = Stop.objects.get(stopId=_['stop2'])
@@ -85,10 +77,10 @@ def trasa():
         #algo olka tf. Później odkomentować i ogarnąć
         #line = services.get_route_number_by_id(best_route)
         #route.append(Route.objects.create(stop1=stop1, stop2=stop2, line=line))
-    context = {'start_id': start_id, 'end_id': end_id, 'max_changes': max_changes,
-               'max_waiting_time': max_waiting_time, 'max_distance_on_foot': max_distance_on_foot,
-               'start_name': start_name, 'end_name': end_name, 'route': route}
-    return render(request, 'final/trasa.html', context)
+#    context = {'start_id': start_id, 'end_id': end_id, 'max_changes': max_changes,
+#               'max_waiting_time': max_waiting_time, 'max_distance_on_foot': max_distance_on_foot,
+#               'start_name': start_name, 'end_name': end_name, 'route': route}
+#    return render(request, 'final/trasa.html', context)
 
 
 #def get_time():

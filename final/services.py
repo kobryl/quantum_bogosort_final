@@ -76,31 +76,35 @@ def create_path(start, end, max_changes, max_waiting_time, max_distance_on_foot)
         f.write(start + " " + end + " " + get_time())
     os.system('hackathon.exe')
     with open('result.txt', 'r') as f:
-        for line in f:
-            route.append(line)
+        data = f.read().split(" ")
+        for i in range(0, len(data) - 2, 2):
+            stop1 = Stop.objects.get(stopId=data[i])
+            routeId = get_route_number_by_id(get_route_by_trip(data[i+1]))
+            stop2 = Stop.objects.get(stopId=data[i+2])
+            route.append(Route.objects.create(stop1=stop1.stopName + ' ' + stop1.subName, line=routeId, stop2=stop2.stopName + ' ' + stop2.subName))
     stop1 = Stop.objects.get(stopId=start)
     stop2 = Stop.objects.get(stopId=end)
     start_name = stop1.stopName + " " + stop1.subName
     end_name = stop2.stopName + " " + stop2.subName
-    for step in route:
-        stop1 = Stop.objects.get(stopId=step['stop1'])
-        stop2 = Stop.objects.get(stopId=step['stop2'])
-        start_name = stop1.stopName + " " + stop1.subName
-        end_name = stop2.stopName + " " + stop2.subName
-        line=''
-        route.append(Route.objects.create(stop1=start_name, stop2=end_name, line=line))
     context = {'start_id': start, 'end_id': end, 'max_changes': max_changes,
                'max_waiting_time': max_waiting_time, 'max_distance_on_foot': max_distance_on_foot,
                'start_name': start_name, 'end_name': end_name, 'route': route}
     return context
 
+def get_route_by_trip(trip_id):
+    with open('gtfsgoogle/trips.txt', 'r', encoding='UTF-8') as f:
+        lines = f.readlines()
+        for line in lines:
+            trip = line.split(',')[2]
+            if trip == trip_id:
+                return line.split(',')[0]
 
 def get_time():
     date = datetime.datetime.now()
     return strftime("%H:%M:%S")
 
-#def get_today():
-#    return datetime.datetime.today().isoformat()[0:10]
+def get_today():
+    return datetime.datetime.today().isoformat()[0:10]
 #def get_possible_routes(stop1, stop2):
 #    url = "https://ckan.multimediagdansk.pl/dataset/c24aa637-3619-4dc2-a171-a23eec8f2172/resource/3115d29d-b763-4af5-93f6-763b835967d6/download/stopsintrip.json"
 #    response = urlopen(url)
@@ -121,15 +125,16 @@ def get_time():
 #                routes.append(i['routeId'])
 #                stop2routes.remove(j)
 #    return routes
-#def get_route_number_by_id(route_id):
-#    url = "https://ckan.multimediagdansk.pl/dataset/c24aa637-3619-4dc2-a171-a23eec8f2172/resource/22313c56-5acf-41c7-a5fd-dc5dc72b3851/download/routes.json"
-#    response = urlopen(url)
-#    data_json = json.loads(response.read())
-#    routes = data_json[get_today()]['routes']
-#    for route in routes:
-#        if route['routeId'] == route_id:
-#            return route['routeShortName']
-#    return ''
+def get_route_number_by_id(route_id):
+    #print(route_id)
+    with open('gtfsgoogle/routes.txt', 'r') as f:
+        lines = f.readlines()[1:]
+        for line in lines:
+            routeID = line.split(',')[0]
+            routeName = line.split(',')[2]
+            if routeID == route_id:
+                return routeName
+    return ''
 #def find_transport_routeId_with_fastest_arrival_time(stop, destination):
 #    departures = []
 #    departures_routeId = []

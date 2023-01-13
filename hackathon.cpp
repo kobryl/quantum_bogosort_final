@@ -329,7 +329,7 @@ void dijkstras(int source_node, int dest_node, int node_count, std::vector<std::
 
     for (int i = 0; i < output.size(); i++) {
         if( (skip[i] && i > 0 && !skip[i - 1]) || (i > 0 && !skip[i] && !skip[i - 1])) {
-            found_path << int_to_trip[output[i].second] << " ";
+            found_path << output[i].second << " ";
         }
         if(!skip[i])
             found_path << short_to_long_id[output[i].first] << " ";
@@ -354,7 +354,7 @@ void generateProcessedFiles() {
 int main() {
      //generateProcessedFiles();
     ShortestDistanceCalculator my_calculator;
-    my_calculator.setDestination(436);
+    my_calculator.setDestination(2);
     my_calculator.loadData();
     my_calculator.findPath(0);
 }

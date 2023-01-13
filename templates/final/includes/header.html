@@ -5,6 +5,7 @@
     <title>Znajdź drogę do celu</title>
     {% load static %}
     {{ stops_dict|json_script:"stops-data" }}
+    {{ incident }}
     <script src="{% static '/form.js' %}"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

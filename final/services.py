@@ -3,7 +3,7 @@ import requests
 from django.shortcuts import render, redirect
 from django.core import serializers
 from urllib.request import urlopen
-from .models import Stop
+from .models import Stop, Route
 from . import secret
 
 
@@ -67,20 +67,24 @@ def get_serialized_stop_info():
 
 # TODO to dokończyć jak olek skończy
 def create_path(start, end, max_changes, max_waiting_time, max_distance_on_foot):
-    pass
     # tu bedzie komunikacja z algorytmem
-    #route = []
-    #for _ in _:
-    #    stop1 = Stop.objects.get(stopId=_['stop1'])
-    #    stop2 = Stop.objects.get(stopId=_['stop2'])
-        #best_route = find_transport_with_fastest_arrival_time(stop1, stop2)
+    route = []
+    stop1 = Stop.objects.get(stopId=start)
+    stop2 = Stop.objects.get(stopId=end)
+    start_name = stop1.stopName + " " + stop1.subName
+    end_name = stop2.stopName + " " + stop2.subName
+    for _ in _:
+        stop1 = Stop.objects.get(stopId=_['stop1'])
+        stop2 = Stop.objects.get(stopId=_['stop2'])
+        start_name = stop1.stopName + " " + stop1.subName
+        end_name = stop2.stopName + " " + stop2.subName
         #algo olka tf. Później odkomentować i ogarnąć
-        #line = services.get_route_number_by_id(best_route)
-        #route.append(Route.objects.create(stop1=stop1, stop2=stop2, line=line))
-#    context = {'start_id': start_id, 'end_id': end_id, 'max_changes': max_changes,
-#               'max_waiting_time': max_waiting_time, 'max_distance_on_foot': max_distance_on_foot,
-#               'start_name': start_name, 'end_name': end_name, 'route': route}
-#    return render(request, 'final/trasa.html', context)
+        line=''
+        route.append(Route.objects.create(stop1=stop1, stop2=stop2, line=line))
+    context = {'start_id': start, 'end_id': end, 'max_changes': max_changes,
+               'max_waiting_time': max_waiting_time, 'max_distance_on_foot': max_distance_on_foot,
+               'start_name': start_name, 'end_name': end_name, 'route': route}
+    return context
 
 
 #def get_time():
